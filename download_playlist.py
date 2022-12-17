@@ -19,3 +19,5 @@ if __name__ == '__main__':
     playlist_link = 'https://www.youtube.com/watch?v=Mph0cWZsoV4&list=PLM8lYG2MzHmQn55ii0duXdO9QSoDF5myF'
 
     download_all_videos(playlist_link, playlist_dir)
+
+    print("All videos downloaded!")
