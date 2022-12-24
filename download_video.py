@@ -13,7 +13,8 @@ def download(video_link, path):
 if __name__ == '__main__':
     home_dir = Path('./videos')
 
-    if link := '':
+    # if the link is empty
+    if link := '':  # insert video url inside the ''
         download(link, home_dir)
     else:
         # open the videos.txt with the videos and download one by one
