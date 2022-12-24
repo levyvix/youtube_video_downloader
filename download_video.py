@@ -12,5 +12,14 @@ def download(video_link, path):
 
 if __name__ == '__main__':
     home_dir = Path('./videos')
-    link = 'https://www.youtube.com/watch?v=u31mTpus12k'
-    download(link, home_dir)
+
+    if link := '':
+        download(link, home_dir)
+    else:
+        # open the videos.txt with the videos and download one by one
+
+        with open('./videos.txt', 'rb') as videos:
+            videos = videos.readlines()
+
+        for v in videos:
+            download(v.decode('utf-8'), home_dir)
