@@ -5,7 +5,12 @@ from pathlib import Path
 def download(video_link, path):
     yt = YouTube(video_link)
     print("Downloading Video: ", yt.title)
-    video = yt.streams.get_highest_resolution()
+    video = (
+        yt.streams.filter(progressive=True, file_extension="mp4")
+        .order_by("resolution")
+        .desc()
+        .first()
+    )
     video.download(output_path=path)
     print("Video Donwloaded: ", yt.title)
 
@@ -14,7 +19,9 @@ if __name__ == "__main__":
     home_dir = Path("./videos")
 
     # if the link is empty
-    if link := "":  # insert video url inside the ''
+    if (
+        link := "https://www.youtube.com/watch?v=zJOQRLJyQYA&list=PLFAoLYoZ_IxY3mMaG0X9OrvJFyVHSOZRn&index=9"
+    ):  # insert video url inside the ''
         download(link, home_dir)
     else:
         # open the videos.txt with the videos and download one by one
