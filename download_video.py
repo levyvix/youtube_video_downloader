@@ -10,17 +10,17 @@ def download(video_link, path):
     print("Video Donwloaded: ", yt.title)
 
 
-if __name__ == '__main__':
-    home_dir = Path('./videos')
+if __name__ == "__main__":
+    home_dir = Path("./videos")
 
     # if the link is empty
-    if link := '':  # insert video url inside the ''
+    if link := "":  # insert video url inside the ''
         download(link, home_dir)
     else:
         # open the videos.txt with the videos and download one by one
 
-        with open('./videos.txt', 'rb') as videos:
+        with open("./videos.txt", "rb") as videos:
             videos = videos.readlines()
 
         for v in videos:
-            download(v.decode('utf-8'), home_dir)
+            download(v.decode("utf-8"), home_dir)
