@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # if the link is empty
     if (
-        link := "https://www.youtube.com/watch?v=zJOQRLJyQYA&list=PLFAoLYoZ_IxY3mMaG0X9OrvJFyVHSOZRn&index=9"
+        link := "https://www.youtube.com/watch?v=uKyojQjbx4c"
     ):  # insert video url inside the ''
         download(link, home_dir)
     else:
@@ -29,5 +29,5 @@ if __name__ == "__main__":
         with open("./videos.txt", "rb") as videos:
             videos = videos.readlines()
 
-        for v in videos:
-            download(v.decode("utf-8"), home_dir)
+            for v in videos:
+                download(v.decode("utf-8"), home_dir)
