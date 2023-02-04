@@ -1,5 +1,6 @@
 from pytube import Playlist
 from pathlib import Path
+import sys
 
 
 def download_all_videos(p_link, path):
@@ -28,5 +29,12 @@ def download_all_videos(p_link, path):
 if __name__ == "__main__":
     playlist_dir = Path("./playlists")
     playlist_link = "https://www.youtube.com/watch?v=Mph0cWZsoV4&list=PLM8lYG2MzHmQn55ii0duXdO9QSoDF5myF"
+
+    if not playlist_dir.exists():
+        playlist_dir.mkdir()
+
+    # if a playlist link is passed as an argument, use it
+    if len(sys.argv) > 1:
+        playlist_link = sys.argv[1]
 
     download_all_videos(playlist_link, playlist_dir)

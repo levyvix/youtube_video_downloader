@@ -1,28 +1,52 @@
+import pytube
+
 from pytube import YouTube
 from pathlib import Path
+import sys
+
+
+# add a progess bar
+
+
+def on_progress(stream, chunk, bytes_remaining):
+
+    total = round(stream.filesize / 1024 / 1024, 2)
+    remaining = round(bytes_remaining / 1024 / 1024, 2)
+
+    # show percentage
+    print(f"{round((total - remaining) / total * 100, 2)}%")
+
+
+def on_complete(stream: pytube.Stream, file_path: str):
+    print("Download Complete! Saving to: ", file_path)
 
 
 def download(video_link, path):
-    yt = YouTube(video_link)
-    print("Downloading Video: ", yt.title)
-    video = (
-        yt.streams.filter(progressive=True, file_extension="mp4")
-        .order_by("resolution")
-        .desc()
-        .first()
+    # add a progress bar
+    yt = YouTube(
+        video_link, on_progress_callback=on_progress, on_complete_callback=on_complete
     )
+    print("Downloading Video: ", yt.title)
+    video = yt.streams.get_by_itag(22)
+
+    # add a progess bar
     video.download(output_path=path)
+
     print("Video Donwloaded: ", yt.title)
 
 
 if __name__ == "__main__":
     home_dir = Path("./videos")
+    link = "https://www.youtube.com/watch?v=uKyojQjbx4c"
 
-    # if the link is empty
-    if (
-        link := "https://www.youtube.com/watch?v=uKyojQjbx4c"
-    ):  # insert video url inside the ''
+    # if a video link is passed as an argument, use it
+    if len(sys.argv) > 1:
+        link = sys.argv[1]
+
         download(link, home_dir)
+    elif len(sys.argv) == 1:
+        download(link, home_dir)
+
     else:
         # open the videos.txt with the videos and download one by one
 
