@@ -24,6 +24,6 @@
 
 
 ### TODO
-- [ ] Add a progress bar
-- [ ] Add a GUI
+- [X] Add a progress bar
 - [X] Add a way to download the videos in the best quality
+- [ ] Add a GUI

@@ -9,12 +9,7 @@ def download_all_videos(p_link, path):
     for id, video in enumerate(playlist.videos):
         print("Downloading: ", video.title)
 
-        vid = (
-            video.streams.filter(progressive=True, file_extension="mp4")
-            .order_by("resolution")
-            .desc()
-            .first()
-        )
+        vid = video.streams.filter(progressive=True, file_extension="mp4").order_by("resolution").desc().first()
 
         # downloads video in sequence, and adds a ID prefix
         try:
