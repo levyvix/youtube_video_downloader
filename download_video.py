@@ -1,6 +1,4 @@
 import pytube
-
-from pytube import YouTube
 from pathlib import Path
 import sys
 
@@ -23,7 +21,7 @@ def on_complete(stream: pytube.Stream, file_path: str):
 
 def download(video_link, path):
     # add a progress bar
-    yt = YouTube(video_link, on_progress_callback=on_progress, on_complete_callback=on_complete)
+    yt = pytube.YouTube(video_link, on_progress_callback=on_progress, on_complete_callback=on_complete)
     print("Downloading Video: ", yt.title)
     video = yt.streams.get_by_itag(22)
 
