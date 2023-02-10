@@ -1,7 +1,7 @@
-import pytube
-from pathlib import Path
 import sys
+from pathlib import Path
 
+import pytube
 
 # add a progess bar
 
