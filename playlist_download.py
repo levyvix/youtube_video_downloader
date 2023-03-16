@@ -1,7 +1,7 @@
-from pytube import Playlist
-import os
 import sys
 from pathlib import Path
+
+from pytube import Playlist
 
 
 # make dir with playlistname
