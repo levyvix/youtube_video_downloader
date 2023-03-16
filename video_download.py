@@ -1,34 +1,24 @@
 import sys
 from pathlib import Path
-
 import pytube
-
-# add a progess bar
-
-
-def on_progress(stream, chunk, bytes_remaining):
-
-    total = round(stream.filesize / 1024 / 1024, 2)
-    remaining = round(bytes_remaining / 1024 / 1024, 2)
-
-    # show percentage
-    print(f"{round((total - remaining) / total * 100, 2)}%")
-
-
-def on_complete(stream: pytube.Stream, file_path: str):
-    print("Download Complete! Saving to: ", file_path)
 
 
 def download(video_link, path):
     # add a progress bar
-    yt = pytube.YouTube(video_link, on_progress_callback=on_progress, on_complete_callback=on_complete)
+    yt = pytube.YouTube(video_link, on_progress_callback=progress_func)
     print("Downloading Video: ", yt.title)
-    video = yt.streams.get_by_itag(22)
+    video = yt.streams.get_by_itag(22)  # 720p
 
-    # add a progess bar
     video.download(output_path=path)
 
-    print("Video Donwloaded: ", yt.title)
+    print("\nVideo Donwloaded: ", yt.title)
+
+
+def progress_func(stream, chunk, bytes_remaining):
+    curr = stream.filesize - bytes_remaining
+    done = int(50 * curr / stream.filesize)
+    sys.stdout.write("\r[{}{}] ".format("=" * done, " " * (50 - done)))
+    sys.stdout.flush()
 
 
 if __name__ == "__main__":

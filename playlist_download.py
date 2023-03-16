@@ -1,35 +1,26 @@
 from pytube import Playlist
-from pathlib import Path
+import os
 import sys
 
 
-def download_all_videos(p_link, path):
-    playlist = Playlist(p_link)
-    path_for_playlist = path / playlist.title
-    for id, video in enumerate(playlist.videos):
-        print("Downloading: ", video.title)
+# make dir with playlistname
+def download_playlist(link):
+    p = Playlist(link)
+    if not os.path.exists(p.title):
+        os.mkdir(p.title)
 
-        vid = video.streams.filter(progressive=True, file_extension="mp4").order_by("resolution").desc().first()
-
-        # downloads video in sequence, and adds a ID prefix
-        try:
-            vid.download(output_path=path_for_playlist, filename=f"{id+1}_{vid.title}")
-
-        except Exception as e:
-            print("Something wrong happened :(", e)
-
-        print(f"Downloaded {vid.title}! \n")
+    for i, video in enumerate(p.videos):
+        print(video.title)
+        # save to dir
+        video.streams.get_highest_resolution().download(
+            p.title, filename_prefix=str(i) + "_"
+        )
 
 
 if __name__ == "__main__":
-    playlist_dir = Path("./playlists")
-    playlist_link = "https://www.youtube.com/watch?v=Mph0cWZsoV4&list=PLM8lYG2MzHmQn55ii0duXdO9QSoDF5myF"
+    link = "https://www.youtube.com/playlist?list=PLo9Vi5B84_dfAuwJqNYG4XhZMrGTF3sBx"
 
-    if not playlist_dir.exists():
-        playlist_dir.mkdir()
-
-    # if a playlist link is passed as an argument, use it
     if len(sys.argv) > 1:
-        playlist_link = sys.argv[1]
+        link = sys.argv[1]
 
-    download_all_videos(playlist_link, playlist_dir)
+    download_playlist(link)

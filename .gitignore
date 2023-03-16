@@ -6,3 +6,5 @@
 /videos/*
 settings.json
 
+/.ipynb_checkpoints/
+
