@@ -2,8 +2,8 @@
 .idea/*
 /shelf/
 /workspace.xml
-/playlists/*
-/videos/*
+/Playlists/*
+/Videos/*
 settings.json
 
 /.ipynb_checkpoints/
