@@ -8,7 +8,12 @@ def download(video_link, path):
     # add a progress bar
     yt = pytube.YouTube(video_link, on_progress_callback=progress_func)
     print("Downloading Video: ", yt.title)
-    video = yt.streams.get_by_itag(22)  # 720p
+    video = (
+        yt.streams.filter(progressive=True, file_extension="mp4")
+        .order_by("resolution")
+        .desc()
+        .first()
+    )
 
     video.download(output_path=path)
 
