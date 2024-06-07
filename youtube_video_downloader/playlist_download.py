@@ -8,7 +8,7 @@ app = typer.Typer()
 
 
 # make dir with playlistname
-def download_playlist(link, path):
+def download_playlist(link: str, path: Path):
     p = Playlist(link)
     to_path = path / p.title
 
