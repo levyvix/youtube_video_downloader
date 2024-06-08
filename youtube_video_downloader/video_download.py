@@ -45,21 +45,15 @@ def progress_func(stream, chunk, bytes_remaining):
 
 @app.command()
 def download(
-    link: str,
-    file: bool = typer.Option(
-        False, help="True if the videos are in a file, False if passed by argument"
-    ),
+    links: list[str] = typer.Argument(None, help="List of links to download"),
     path: Path = typer.Option(Path.home() / "Videos", help="Path to save the videos"),
+    file: str = typer.Option(None, "-f", help="Name of the file with the links"),
 ):
     if file:
-        with open("../videos.txt", "r") as videos_file:
-            videos = videos_file.read().split("\n")
-            print(videos)
+        with open(file, "r") as f:
+            links = f.read().splitlines()
 
-            for video in videos:
-                download_video(video, path)
-
-    else:
+    for link in links:
         download_video(link, path)
 
 
