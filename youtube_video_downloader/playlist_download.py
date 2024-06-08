@@ -14,23 +14,32 @@ def download_playlist(link: str, path: Path):
 
     for i, video in enumerate(p.videos):
         print(video.title)
+        video.register_on_progress_callback(progress_func)
         # save to dir
         video.streams.get_highest_resolution().download(
             to_path,
             filename_prefix=str(i) + "_",
         )
+        print()
+
+
+def progress_func(stream, chunk, bytes_remaining):
+    curr = stream.filesize - bytes_remaining
+    done = int(50 * curr / stream.filesize)
+    sys.stdout.write("\r[{}{}] ".format("=" * done, " " * (50 - done)))
+    sys.stdout.flush()
 
 
 @app.command()
 def download(
-    link: str = "https://www.youtube.com/playlist?list=PLo9Vi5B84_dfAuwJqNYG4XhZMrGTF3sBx",
-    path: Path = Path("./Playlists"),
+    link: str,
+    path: Path = Path.home() / "Videos" / "Playlists",
 ):
     """
     Downloads a YouTube playlist to the specified path.
 
     Args:
-        link (str): The link of the YouTube playlist to be downloaded. Defaults to "https://www.youtube.com/playlist?list=PLo9Vi5B84_dfAuwJqNYG4XhZMrGTF3sBx".
+        link (str): The link of the YouTube playlist to be downloaded.
         path (Path): The path where the playlist will be saved. Defaults to "./Playlists".
 
     Returns:
@@ -44,7 +53,6 @@ def download(
         Downloading Video: Video Title 2
         ...
     """
-    link = sys.argv[1]
 
     download_playlist(link, path)
 

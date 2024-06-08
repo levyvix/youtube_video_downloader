@@ -12,6 +12,7 @@ typer = {extras = ["all"], version = "^0.12.3"}
 
 [tool.poetry.scripts]
 vid = "youtube_video_downloader.video_download:app"
+vidp = "youtube_video_downloader.playlist_download:app"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.25.0"
