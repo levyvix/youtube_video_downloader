@@ -5,7 +5,9 @@
 /Playlists/*
 /Videos/*
 settings.json
-__pycache__/
+youtube_video_downloader\__pycache__
+dist
+*.cython
 
 /.ipynb_checkpoints/
 
