@@ -27,11 +27,15 @@ def download_video(video_link, path):
     Example:
         >>> download("https://www.youtube.com/watch?v=uKyojQjbx4c", Path("./Videos"))
         Downloading Video:  Video Title
+        [===================>] 100%
         Video Donwloaded:  Video Title
     """
     yt = pytube.YouTube(video_link, on_progress_callback=progress_func)
     print("Downloading Video: ", yt.title)
-    yt.streams.get_highest_resolution().download(output_path=path)
+
+    yt.streams.filter(progressive=True, file_extension="mp4").order_by(
+        "resolution"
+    ).desc().first().download()
 
     print("Video Donwloaded: ", yt.title)
 
@@ -39,7 +43,9 @@ def download_video(video_link, path):
 def progress_func(stream, chunk, bytes_remaining):
     curr = stream.filesize - bytes_remaining
     done = int(50 * curr / stream.filesize)
-    sys.stdout.write("\r[{}{}] ".format("=" * done, " " * (50 - done)))
+    # add =>
+
+    sys.stdout.write("\r[{}{}] ".format("=" * done, ">" + " " * (50 - done)))
     sys.stdout.flush()
 
 
